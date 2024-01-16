@@ -13,7 +13,7 @@ public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
-    @GetMapping("/")
+    @GetMapping
     public String getAuthors() {
         return authorService.getAuthors().toString();
 
@@ -24,7 +24,7 @@ public class AuthorController {
         return authorService.findById(id);
     }
 
-    @PostMapping("/")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED) // Status Code 201
     public Author saveAuthor(@RequestBody Author body) {
         return authorService.save(body);

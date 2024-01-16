@@ -12,7 +12,7 @@ public class BlogController {
     @Autowired
     private BlogPostService blogPostService;
 
-    @GetMapping("/")
+    @GetMapping
     public String getPosts() {
         return blogPostService.getPosts().toString();
 
@@ -23,7 +23,7 @@ public class BlogController {
         return blogPostService.findById(id);
     }
 
-    @PostMapping("/")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED) // Status Code 201
     public BlogPost savePost(@RequestBody BlogPost body) {
         return blogPostService.save(body);

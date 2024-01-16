@@ -17,7 +17,7 @@ public class BlogPost {
     private String category;
     private String title;
     private String content;
-    private LocalTime readingTime;
+    private int readingTime; // ore minuti e secondi?
     private String cover;
 
 
