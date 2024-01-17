@@ -34,6 +34,11 @@ public class BlogController {
     public void findByIdAndDelete(@PathVariable long id) {
         this.blogPostService.findByIdAndDelete(id);
     }
+
+    @PutMapping("/{id}")
+    public BlogPost getUserByIdAndUpdate(@PathVariable Long id, @RequestBody BlogPost bodymod) {
+        return blogPostService.findByIdAndUpdate(id, bodymod);
+    }
 }
 
 

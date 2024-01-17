@@ -1,7 +1,12 @@
 package giuliasilvestrini.S5L2BE.service;
 
+import giuliasilvestrini.S5L2BE.entities.Author;
 import giuliasilvestrini.S5L2BE.entities.BlogPost;
 import giuliasilvestrini.S5L2BE.exceptions.NotFoundException;
+import giuliasilvestrini.S5L2BE.repositories.AuthorDAO;
+import giuliasilvestrini.S5L2BE.repositories.BlogDAO;
+import org.hibernate.query.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,42 +16,40 @@ import java.util.Random;
 
 @Service
 public class BlogPostService {
-    private List<BlogPost> posts = new ArrayList<>();
+
+    @Autowired
+    private BlogDAO blogDAO;
+    @Autowired
+    private AuthorDAO authorDAO;
 
     public List<BlogPost> getPosts() {
-        return this.posts;
+
+        return blogDAO.findAll();
 
     }
 
 
-    public BlogPost findById(long id) {
-        BlogPost found = null;
-        for (BlogPost blogPost : this.posts) {
-            if (blogPost.getId() == id) {
-                found = blogPost;
-            }
-        }
-        if (found == null)
-            throw new NotFoundException(id);
-        return found;
+    public BlogPost findById(Long id) {
+        return blogDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
     public BlogPost save(BlogPost body) {
-        //id randomico per ora
-        Random random = new Random();
-        body.setId(random.nextInt(1, 500));
-        //aggiunge alla lista di posts
-        this.posts.add(body);
+
         return body;
     }
 
-    public void findByIdAndDelete(long id) {
-        Iterator<BlogPost> iterator = this.posts.iterator();
-        while (iterator.hasNext()) {
-            BlogPost current = iterator.next();
-            if (current.getId() == id) {
-                iterator.remove();
-            }
-        }
+    public void findByIdAndDelete(Long id) {
+        BlogPost found = this.findById(id);
+        blogDAO.delete(found);
+    }
+
+    public BlogPost findByIdAndUpdate(Long id, BlogPost body) {
+        BlogPost found = this.findById(id);
+        found.setCategory(body.getCategory());
+        found.setTitle(body.getTitle());
+        found.setContent(body.getContent());
+        found.setReadingTime(body.getReadingTime());
+        found.setCover(body.getCover());
+        return blogDAO.save(found);
     }
 }

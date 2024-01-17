@@ -1,6 +1,7 @@
 package giuliasilvestrini.S5L2BE.controller;
 
 import giuliasilvestrini.S5L2BE.entities.Author;
+import giuliasilvestrini.S5L2BE.entities.BlogPost;
 import giuliasilvestrini.S5L2BE.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,11 @@ public class AuthorController {
     @ResponseStatus(HttpStatus.NO_CONTENT) // Status Code 204 (No content)
     public void findByIdAndDelete(@PathVariable long id) {
         this.authorService.findByIdAndDelete(id);
+    }
+
+    @PutMapping("/{id}")
+    public Author getUserByIdAndUpdate(@PathVariable Long id, @RequestBody Author bodymod) {
+        return authorService.findByIdAndUpdate(id, bodymod);
     }
 }
 
