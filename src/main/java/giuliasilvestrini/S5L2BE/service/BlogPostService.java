@@ -4,15 +4,16 @@ import giuliasilvestrini.S5L2BE.entities.Author;
 import giuliasilvestrini.S5L2BE.entities.BlogPost;
 import giuliasilvestrini.S5L2BE.exceptions.NotFoundException;
 import giuliasilvestrini.S5L2BE.payloads.NewPostPayload;
-import giuliasilvestrini.S5L2BE.repositories.AuthorDAO;
 import giuliasilvestrini.S5L2BE.repositories.BlogDAO;
-import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+
 import java.util.Random;
 
 @Service
@@ -23,9 +24,9 @@ public class BlogPostService {
     @Autowired
     private AuthorService authorService;
 
-    public List<BlogPost> getPosts() {
-
-        return blogDAO.findAll();
+    public Page<BlogPost> getPosts(int page, int size, String sort) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+        return blogDAO.findAll(pageable);
 
     }
 
@@ -39,7 +40,8 @@ public class BlogPostService {
         BlogPost newBlogPost = new BlogPost();
         newBlogPost.setTitle(body.getTitle());
         newBlogPost.setContent(body.getContent());
-        newBlogPost.setReadingTime(body.getReadingTime());
+        Random random = new Random();
+        newBlogPost.setReadingTime(random.nextInt(1, 51));
         newBlogPost.setCover("http://picsum.photos/200/200");
         newBlogPost.setAuthor(author);
         newBlogPost.setCategory(body.getCategory());

@@ -4,6 +4,7 @@ import giuliasilvestrini.S5L2BE.entities.BlogPost;
 import giuliasilvestrini.S5L2BE.payloads.NewPostPayload;
 import giuliasilvestrini.S5L2BE.service.BlogPostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +14,9 @@ public class BlogController {
     @Autowired
     private BlogPostService blogPostService;
 
-    @GetMapping ("")
-    public String getPosts() {
-        return blogPostService.getPosts().toString();
+    @GetMapping("")
+    public Page getPosts(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "9") int size, @RequestParam(defaultValue = "title") String sortBy) {
+        return blogPostService.getPosts(page, size, sortBy);
 
     }
 
