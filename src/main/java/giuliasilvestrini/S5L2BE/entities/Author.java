@@ -30,7 +30,7 @@ public class Author {
     private String email;
     private LocalDate birthDate;
     private String avatar;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     @JsonIgnore
     private List<BlogPost> posts;

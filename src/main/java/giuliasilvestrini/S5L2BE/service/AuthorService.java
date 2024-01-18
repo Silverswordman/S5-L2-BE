@@ -35,9 +35,9 @@ public class AuthorService {
     }
 
     public Author save(Author body) {
-
-        return body;
+        return authorDAO.save(body);
     }
+    
 
     public void findByIdAndDelete(Long id) {
         Author found = this.findById(id);
