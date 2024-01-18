@@ -2,6 +2,7 @@ package giuliasilvestrini.S5L2BE.controller;
 
 import giuliasilvestrini.S5L2BE.entities.Author;
 import giuliasilvestrini.S5L2BE.entities.BlogPost;
+import giuliasilvestrini.S5L2BE.payloads.NewAuthorPayload;
 import giuliasilvestrini.S5L2BE.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,7 +32,7 @@ public class AuthorController {
     //salva autore
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED) // Status Code 201
-    public Author saveAuthor(@RequestBody Author body) {
+    public Author saveAuthor(@RequestBody NewAuthorPayload body) {
         return authorService.save(body);
     }
 

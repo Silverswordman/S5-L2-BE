@@ -3,6 +3,7 @@ package giuliasilvestrini.S5L2BE.service;
 import giuliasilvestrini.S5L2BE.entities.Author;
 import giuliasilvestrini.S5L2BE.entities.BlogPost;
 import giuliasilvestrini.S5L2BE.exceptions.NotFoundException;
+import giuliasilvestrini.S5L2BE.payloads.NewAuthorPayload;
 import giuliasilvestrini.S5L2BE.repositories.AuthorDAO;
 import giuliasilvestrini.S5L2BE.repositories.BlogDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,10 +36,18 @@ public class AuthorService {
         return authorDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 
-    public Author save(Author body) {
-        return authorDAO.save(body);
+    public Author save(NewAuthorPayload body) {
+        Author newAuthor = new Author();
+        newAuthor.setName(body.getName());
+        newAuthor.setSurname(body.getSurname());
+        newAuthor.setEmail(body.getEmail());
+        Random random = new Random();
+        newAuthor.setBirthDate(LocalDate.of(random.nextInt(1910, 2003), random.nextInt(1, 12), random.nextInt(1, 28)));
+        newAuthor.setAvatar("http://picsum.photos/200/200");
+
+        return authorDAO.save(newAuthor);
     }
-    
+
 
     public void findByIdAndDelete(Long id) {
         Author found = this.findById(id);

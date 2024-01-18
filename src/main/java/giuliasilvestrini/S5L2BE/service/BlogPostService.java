@@ -36,6 +36,7 @@ public class BlogPostService {
     }
 
     public BlogPost save(NewPostPayload body) {
+        // istanzi autori e poi lo chiedi per il json
         Author author = authorService.findById(body.getAuthorId());
         BlogPost newBlogPost = new BlogPost();
         newBlogPost.setTitle(body.getTitle());
@@ -43,6 +44,7 @@ public class BlogPostService {
         Random random = new Random();
         newBlogPost.setReadingTime(random.nextInt(1, 51));
         newBlogPost.setCover("http://picsum.photos/200/200");
+        // qua chiedi autore
         newBlogPost.setAuthor(author);
         newBlogPost.setCategory(body.getCategory());
         return blogDAO.save(newBlogPost);
