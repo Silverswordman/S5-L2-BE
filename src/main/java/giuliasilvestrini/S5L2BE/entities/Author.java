@@ -14,7 +14,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
+
 @Entity
 @ToString
 
@@ -31,20 +31,9 @@ public class Author {
     private LocalDate birthDate;
     private String avatar;
     @OneToMany
-    @JoinColumn(name = "author")
+    @JoinColumn(name = "author_id")
     @JsonIgnore
     private List<BlogPost> posts;
-
-    public Author(String name, String surname, String email, LocalDate birthDate
-    ) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.birthDate = birthDate;
-
-
-    }
-
 
 
 }

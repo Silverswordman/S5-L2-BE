@@ -1,6 +1,7 @@
 package giuliasilvestrini.S5L2BE.controller;
 
 import giuliasilvestrini.S5L2BE.entities.BlogPost;
+import giuliasilvestrini.S5L2BE.payloads.NewPostPayload;
 import giuliasilvestrini.S5L2BE.service.BlogPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +13,7 @@ public class BlogController {
     @Autowired
     private BlogPostService blogPostService;
 
-    @GetMapping
+    @GetMapping ("")
     public String getPosts() {
         return blogPostService.getPosts().toString();
 
@@ -23,9 +24,10 @@ public class BlogController {
         return blogPostService.findById(id);
     }
 
-    @PostMapping
+    // LA POST con il nuovo payload
+    @PostMapping ("")
     @ResponseStatus(HttpStatus.CREATED) // Status Code 201
-    public BlogPost savePost(@RequestBody BlogPost body) {
+    public BlogPost savePost(@RequestBody NewPostPayload body) {
         return blogPostService.save(body);
     }
 

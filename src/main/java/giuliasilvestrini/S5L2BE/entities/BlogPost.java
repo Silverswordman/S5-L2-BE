@@ -10,8 +10,8 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
+@ToString
 
 public class BlogPost {
 
@@ -19,32 +19,14 @@ public class BlogPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
     private String category;
     private String title;
     private String content;
-    private int readingTime; // ore minuti e secondi?
+    private int readingTime;
     private String cover;
-
-    public BlogPost(String category, String title, String content, int readingTime, String cover) {
-        this.category = category;
-        this.title = title;
-        this.content = content;
-        this.readingTime = readingTime;
-        this.cover = cover;
-    }
-
-    @Override
-    public String toString() {
-        return "BlogPost{" +
-                "id=" + id +
-                ", category='" + category + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", readingTime=" + readingTime +
-                ", cover='" + cover + '\'' +
-                '}';
-    }
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
 
 
 }

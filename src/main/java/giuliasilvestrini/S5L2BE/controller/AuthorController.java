@@ -15,18 +15,21 @@ public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
+    //Get Generale
     @GetMapping("")
     public Page getAuthors(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "9") int size, @RequestParam(defaultValue = "name") String sortBy) {
         return authorService.getAuthors(page, size, sortBy);
 
     }
 
+    // get per id autore
     @GetMapping("/{id}")
-    public Author getAuthorsById(@PathVariable long id) {
-        return authorService.findById(id);
+    public Author getAuthorsById(@PathVariable long authorId) {
+        return authorService.findById(authorId);
     }
 
-    @PostMapping
+    //salva autore
+    @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED) // Status Code 201
     public Author saveAuthor(@RequestBody Author body) {
         return authorService.save(body);
@@ -34,13 +37,13 @@ public class AuthorController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT) // Status Code 204 (No content)
-    public void findByIdAndDelete(@PathVariable long id) {
-        this.authorService.findByIdAndDelete(id);
+    public void findByIdAndDelete(@PathVariable long authorId) {
+        this.authorService.findByIdAndDelete(authorId);
     }
 
     @PutMapping("/{id}")
-    public Author getUserByIdAndUpdate(@PathVariable Long id, @RequestBody Author bodymod) {
-        return authorService.findByIdAndUpdate(id, bodymod);
+    public Author getUserByIdAndUpdate(@PathVariable Long authorId, @RequestBody Author body) {
+        return authorService.findByIdAndUpdate(authorId, body);
     }
 }
 
