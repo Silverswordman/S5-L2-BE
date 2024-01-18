@@ -4,6 +4,7 @@ import giuliasilvestrini.S5L2BE.entities.Author;
 import giuliasilvestrini.S5L2BE.entities.BlogPost;
 import giuliasilvestrini.S5L2BE.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +15,9 @@ public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
-    @GetMapping
-    public String getAuthors() {
-        return authorService.getAuthors().toString();
+    @GetMapping("")
+    public Page getAuthors(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "9") int size, @RequestParam(defaultValue = "name") String sortBy) {
+        return authorService.getAuthors(page, size, sortBy);
 
     }
 

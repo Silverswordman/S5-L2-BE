@@ -19,6 +19,13 @@ public class BlogPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+
+    private String category;
+    private String title;
+    private String content;
+    private int readingTime; // ore minuti e secondi?
+    private String cover;
+
     public BlogPost(String category, String title, String content, int readingTime, String cover) {
         this.category = category;
         this.title = title;
@@ -26,15 +33,6 @@ public class BlogPost {
         this.readingTime = readingTime;
         this.cover = cover;
     }
-
-    private String category;
-    private String title;
-    private String content;
-    private int readingTime; // ore minuti e secondi?
-    private String cover;
-    @ManyToOne
-    @JoinColumn(name = "autore_id")
-    private Author author;
 
     @Override
     public String toString() {
